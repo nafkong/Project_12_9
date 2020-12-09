@@ -7,18 +7,21 @@ using namespace cv;
 int main()
 {
 	Mat srcMat = imread("source.png");
+//	Mat srcMat = imread("source1.png");
 	Mat dstMat;
+	srcMat.copyTo(dstMat);
 	vector<Mat> channels;
+	vector<Mat> dst;
 	split(srcMat, channels);
-	Mat dst_R, dst_G, dst_B;
+	split(dstMat, dst);
 	Mat B = channels.at(0);
 	Mat G = channels.at(1);
 	Mat R = channels.at(2);
 //	cvtColor(srcMat, graMat, COLOR_BGR2GRAY);
-	equalizeHist(B, dst_B);
-	equalizeHist(G, dst_G);
-	equalizeHist(R, dst_R);
-	merge(channels, dstMat);
+	equalizeHist(B, dst.at(0));
+	equalizeHist(G, dst.at(1));
+	equalizeHist(R, dst.at(2));
+	merge(dst, dstMat);
 	imshow("srcMat", srcMat);
 	imshow("dstMat", dstMat);
 	waitKey(0);
